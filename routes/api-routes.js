@@ -1,9 +1,7 @@
 const router = require('express').Router();
 const db = require('../models');
-const { red } = require('color-name');
 
-// Use 'db.Workout' to refernce the model and use the methods provided with the model to execute database operatioms
-
+//POST WORKOUT
 router.post('/api/workouts', (req, res) => {
   db.Workout.create(body)
     .then(dbWorkout => {
@@ -14,8 +12,10 @@ router.post('/api/workouts', (req, res) => {
     });
 });
 
+//
 router.put('/api/workouts/:id', (req, res) => {
-  db.Workout.find({ new: true, runValidators: true })
+  db.Workout.findByIdAndUpdate(
+      { _id: params.id }, { $push: { exercises: body } }, { new: true, runValidators: true })
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
@@ -24,6 +24,7 @@ router.put('/api/workouts/:id', (req, res) => {
     });
 });
 
+//GET ALL WORKOUTS
 router.get('/api/workouts', (req, res) => {
   db.Workout.find({})
     .then(dbWorkout => {
@@ -34,6 +35,7 @@ router.get('/api/workouts', (req, res) => {
     });
 });
 
+//GET WORKOUTS FROM RANGE
 router.get('/api/workouts/range', (req, res) => {
   db.Workout.find({})
     .sort({ date: -1 })
@@ -46,13 +48,14 @@ router.get('/api/workouts/range', (req, res) => {
     });
 });
 
+//DELETE WORKOUT BY ID
 router.delete('/api/workouts', ({ body }, res) => {
   // Find document with id passed in as part of data
   // Look into mongoose doc for a method to perform both to find document with id and delete it
   // Review the front end javascript code to understand how document id is passed to back end
   // Fill in the input argument(s) to the method
 
-  db.Workout.findOneAndDelete({ _id: id })
+  db.Workout.findOneAndDelete({ _id: params.id })
 
     // Fill in .then() with call back function that takes no input argument and send boolean 'true' back to browser
     .then()
