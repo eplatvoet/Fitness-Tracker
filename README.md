@@ -12,7 +12,7 @@
 - [SCREENSHOTS](#SCREENSHOTS)  
 
 ## DESCRIPTION
-Welcome to "Tracking My Fitness"
+Welcome to "Tracking My Fitness" - an easy way to keep track of your daily workouts. With this application, the user is able to log any workouts from that day, providing information such as name, type, weight, sets, reps, and duration of workout (cardio workout logs also allow the user to track distance). Since fitness goals are often achieved quicker when they are tracked, the goal is for our user to be able to not only achieve results, but be able to keep track and analyze their workout data.
 
 ## LICENSE
 Unlicensed
@@ -24,7 +24,7 @@ If repository is forked, run "npm i" to install all dependencies.
 - Node.js  
 - Express.js  
 - MongoDB  
-- Mongoose.js
+- Mongoose.js  
 -
 
 ## QUESTIONS
