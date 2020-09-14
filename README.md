@@ -25,7 +25,6 @@ If repository is forked, run "npm i" to install all dependencies.
 - Express.js  
 - MongoDB  
 - Mongoose.js  
--
 
 ## QUESTIONS
 

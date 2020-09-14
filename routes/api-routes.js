@@ -3,7 +3,7 @@ const db = require('../models');
 
 //POST WORKOUT
 router.post('/api/workouts', (req, res) => {
-  db.Workout.create(body)
+  db.Workout.create({})
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
@@ -13,9 +13,11 @@ router.post('/api/workouts', (req, res) => {
 });
 
 //
-router.put('/api/workouts/:id', (req, res) => {
+router.put('/api/workouts/:id', ({ body, params}, res) => {
   db.Workout.findByIdAndUpdate(
-      { _id: params.id }, { $push: { exercises: body } }, { new: true, runValidators: true })
+      { _id: params.id }, 
+      { $push: { exercises: body } }, 
+      { new: true, runValidators: true })
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
@@ -36,10 +38,9 @@ router.get('/api/workouts', (req, res) => {
 });
 
 //GET WORKOUTS FROM RANGE
-router.get('/api/workouts/range', (req, res) => {
-  db.Workout.find({})
-    .sort({ date: -1 })
-    .limit(7)
+router.get('/api/workouts/range', ({ query }, res) => {
+  db.Workout.find(
+      { day: { $gte: query.start, $let: query.end } })
     .then(dbWorkout => {
         res.json(dbWorkout);
     })
@@ -49,7 +50,7 @@ router.get('/api/workouts/range', (req, res) => {
 });
 
 //DELETE WORKOUT BY ID
-router.delete('/api/workouts', ({ body }, res) => {
+router.delete('/api/workouts', ({}, res) => {
   // Find document with id passed in as part of data
   // Look into mongoose doc for a method to perform both to find document with id and delete it
   // Review the front end javascript code to understand how document id is passed to back end
@@ -58,9 +59,9 @@ router.delete('/api/workouts', ({ body }, res) => {
   db.Workout.findOneAndDelete({ _id: params.id })
 
     // Fill in .then() with call back function that takes no input argument and send boolean 'true' back to browser
-    .then()
-
-    // Fill in .catch() with call back function that takes error as input argument and send it back to browser
+    .then(() => {
+        res.json(true);
+    })
     .catch(err => {
         res.status(400).json(err);
     });
